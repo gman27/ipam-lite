@@ -1,0 +1,19 @@
+[Unit]
+Description=IPAM — Algorhythm IP Address Management
+After=network.target
+
+[Service]
+Type=simple
+User=ipam
+Group=ipam
+WorkingDirectory=/opt/ipam
+Environment="IPAM_DB_PATH=/opt/ipam/data/ipam.db"
+ExecStart=/opt/ipam/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8082 --workers 2
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ipam
+
+[Install]
+WantedBy=multi-user.target
